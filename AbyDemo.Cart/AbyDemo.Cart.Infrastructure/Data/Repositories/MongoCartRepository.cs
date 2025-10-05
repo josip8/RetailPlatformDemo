@@ -1,11 +1,10 @@
-﻿using AbyDemo.Cart.Domain.Entities;
-using DnsClient.Internal;
-using Microsoft.Extensions.Logging;
+﻿using AbyDemo.Cart.Domain.Contracts.Repositories;
+using AbyDemo.Cart.Domain.Entities;
 using MongoDB.Driver;
 
 namespace AbyDemo.Cart.Infrastructure.Data.Repositories;
 
-public class MongoCartRepository
+public class MongoCartRepository: ICartRepository
 {
     private readonly IMongoCollection<ShoppingCart> _collection;
 
