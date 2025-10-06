@@ -3,6 +3,6 @@
 public class ProductInfo
 {
     public Guid ProductId { get; set; }
-    public string? ProductName { get; set; }
+    public required string ProductName { get; set; }
     public decimal Price { get; set; }
 }

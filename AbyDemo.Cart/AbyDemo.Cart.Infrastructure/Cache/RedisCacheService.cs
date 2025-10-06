@@ -1,26 +1,21 @@
-﻿using AbyDemo.Cart.Application.Contracts;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using AbyDemo.Cart.Domain.Contracts.Cache;
 using AbyDemo.Cart.Domain.Entities;
 using StackExchange.Redis;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace AbyDemo.Cart.Infrastructure.Cache;
 
-public class RedisCacheService: ICacheService
+public class RedisCacheService(IConnectionMultiplexer redis) : ICacheService
 {
-    private readonly IDatabase _redis;
+    private readonly IDatabase _redis = redis.GetDatabase();
     private readonly TimeSpan _defaultExpiration = TimeSpan.FromMinutes(60);
     private static readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = false,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     };
-
-    public RedisCacheService(IConnectionMultiplexer redis)
-    {
-        _redis = redis.GetDatabase();
-    }
 
     public async Task<ShoppingCart?> Get(string key)
     {
@@ -39,7 +34,7 @@ public class RedisCacheService: ICacheService
         var serialized = JsonSerializer.Serialize(cart, _serializerOptions);
         await _redis.StringSetAsync(key, serialized, expiration ?? _defaultExpiration);
     }
-    
+
     public async Task Delete(string key)
     {
         await _redis.KeyDeleteAsync(key);

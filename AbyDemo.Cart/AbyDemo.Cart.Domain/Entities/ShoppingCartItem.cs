@@ -1,5 +1,4 @@
-﻿using System;
-namespace AbyDemo.Cart.Domain.Entities;
+﻿namespace AbyDemo.Cart.Domain.Entities;
 
 public class ShoppingCartItem
 {

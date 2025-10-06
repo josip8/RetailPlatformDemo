@@ -1,5 +1,6 @@
 ﻿using AbyDemo.Cart.Domain.Entities;
-namespace AbyDemo.Cart.Application.Contracts;
+
+namespace AbyDemo.Cart.Domain.Contracts.Cache;
 
 public interface ICacheService
 {
