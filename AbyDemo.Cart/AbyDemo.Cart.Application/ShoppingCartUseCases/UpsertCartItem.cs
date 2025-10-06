@@ -45,6 +45,7 @@ public class UpsertCartItem(
             {
                 throw new ProductNotFoundException(upsertCartItemDto.ProductId.ToString());
             }
+
             cart.CartItems.Add(
                 new ShoppingCartItem
                 {

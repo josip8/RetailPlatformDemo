@@ -3,7 +3,7 @@ using AbyDemo.Cart.Domain.Entities;
 
 namespace AbyDemo.Cart.Application.ShoppingCartUseCases.Contracts;
 
-internal interface IUpsertCartItem
+public interface IUpsertCartItem
 {
     Task<ShoppingCart> Execute(string userId, UpsertCartItemDto upsertCartItemDto);
 }
