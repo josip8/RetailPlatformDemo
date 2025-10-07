@@ -12,5 +12,6 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\AbyDemo.Cart.Application\AbyDemo.Cart.Application.csproj" />
+        <ProjectReference Include="..\AbyDemo.Cart.Infrastructure\AbyDemo.Cart.Infrastructure.csproj" />
     </ItemGroup>
 </Project>

@@ -1,9 +1,13 @@
 using AbyDemo.Cart.API.Filters;
+using AbyDemo.Cart.Application.Config;
+using AbyDemo.Cart.Infrastructure.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+builder.Services.AddRedisCache(builder.Configuration);
+builder.Services.AddMongoDatabase(builder.Configuration);
+builder.Services.AddProductService();
+builder.Services.AddApplicationServices();
 builder.Services.AddControllers(options => options.Filters.Add<ExceptionFilter>());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,9 +22,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

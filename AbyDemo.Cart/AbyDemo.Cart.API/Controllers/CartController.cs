@@ -33,6 +33,7 @@ public class CartController : ControllerBase
 
     [HttpGet("{userId}")]
     [ProducesResponseType(typeof(CartResponse), 200)]
+    [ProducesResponseType(typeof(ProblemDetails), 400)]
     public async Task<ActionResult<CartResponse>> GetCart(string userId)
     {
         var cart = await _getCart.Execute(userId);
@@ -41,6 +42,7 @@ public class CartController : ControllerBase
 
     [HttpPost("{userId}/items")]
     [ProducesResponseType(typeof(CartResponse), 200)]
+    [ProducesResponseType(typeof(ProblemDetails), 400)]
     public async Task<ActionResult<CartResponse>> UpsertItem(
         string userId,
         [FromBody] UpsertCartItemRequest request
@@ -53,6 +55,7 @@ public class CartController : ControllerBase
 
     [HttpDelete("{userId}/items/{productId}")]
     [ProducesResponseType(typeof(CartResponse), 200)]
+    [ProducesResponseType(typeof(ProblemDetails), 400)]
     public async Task<ActionResult<CartResponse>> RemoveItem(string userId, Guid productId)
     {
         var cart = await _removeCartItem.Execute(userId, productId);
@@ -61,6 +64,7 @@ public class CartController : ControllerBase
 
     [HttpDelete("{userId}")]
     [ProducesResponseType(typeof(CartResponse), 200)]
+    [ProducesResponseType(typeof(ProblemDetails), 400)]
     public async Task<ActionResult<CartResponse>> ClearCart(string userId)
     {
         var cart = await _clearCart.Execute(userId);

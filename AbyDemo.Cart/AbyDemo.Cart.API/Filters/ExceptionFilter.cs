@@ -23,7 +23,7 @@ public class ExceptionFilter : IExceptionFilter
             _ => new ProblemDetails
             {
                 Title = "Unexpected error",
-                Status = StatusCodes.Status500InternalServerError,
+                Status = StatusCodes.Status400BadRequest,
                 Detail = "An internal error occurred.",
             },
         };

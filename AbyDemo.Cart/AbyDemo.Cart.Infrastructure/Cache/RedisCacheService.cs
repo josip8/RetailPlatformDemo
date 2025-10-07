@@ -1,15 +1,14 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using AbyDemo.Cart.Domain.Contracts.Cache;
+﻿using AbyDemo.Cart.Domain.Contracts.Cache;
 using AbyDemo.Cart.Domain.Entities;
-using StackExchange.Redis;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AbyDemo.Cart.Infrastructure.Cache;
 
-public class RedisCacheService(IConnectionMultiplexer redis) : ICacheService
+public class RedisCacheService(IDistributedCache redis) : ICacheService
 {
-    private readonly IDatabase _redis = redis.GetDatabase();
-    private readonly TimeSpan _defaultExpiration = TimeSpan.FromMinutes(60);
+    private readonly IDistributedCache _redis = redis;
     private static readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -19,24 +18,24 @@ public class RedisCacheService(IConnectionMultiplexer redis) : ICacheService
 
     public async Task<ShoppingCart?> Get(string key)
     {
-        var value = await _redis.StringGetAsync(key);
+        var value = await _redis.GetAsync(key);
 
-        if (value.IsNullOrEmpty)
+        if (value == null)
         {
             return null;
         }
 
-        return JsonSerializer.Deserialize<ShoppingCart>(value.ToString(), _serializerOptions);
+        return JsonSerializer.Deserialize<ShoppingCart>(value, _serializerOptions);
     }
 
-    public async Task Set(string key, ShoppingCart cart, TimeSpan? expiration = null)
+    public async Task Set(string key, ShoppingCart cart)
     {
-        var serialized = JsonSerializer.Serialize(cart, _serializerOptions);
-        await _redis.StringSetAsync(key, serialized, expiration ?? _defaultExpiration);
+        var serialized = JsonSerializer.SerializeToUtf8Bytes(cart, _serializerOptions);
+        await _redis.SetAsync(key, serialized, new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60) });
     }
 
     public async Task Delete(string key)
     {
-        await _redis.KeyDeleteAsync(key);
+        await _redis.RemoveAsync(key);
     }
 }

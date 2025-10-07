@@ -12,22 +12,19 @@ public class GetCart(ICartRepository repository, ICacheService cache) : IGetCart
 
     public async Task<ShoppingCart> Execute(string userId)
     {
-        try
-        {
-            var cachedCart = await _cache.Get(userId);
-            if (cachedCart != null)
-            {
-                return cachedCart;
-            }
-        }
-        catch
-        {
-            // Log cache retrieval failure if necessary
-        }
 
+        var cachedCart = await _cache.Get(userId);
+        if (cachedCart != null)
+        {
+            return cachedCart;
+        }
 
         var cart = await _repository.GetCart(userId);
-        cart ??= new ShoppingCart { UserId = userId };
+        if (cart == null)
+        {
+            cart ??= new ShoppingCart { UserId = userId };
+            await _repository.SaveCart(cart);
+        }
 
         await _cache.Set(userId, cart);
         return cart;

@@ -1,17 +1,19 @@
-﻿using MongoDB.Bson.Serialization;
-using AbyDemo.Cart.Domain.Entities;
+﻿using AbyDemo.Cart.Domain.Entities;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace AbyDemo.Cart.Infrastructure.Data;
 
-public class CartDbContext
+public static class CartDbContext
 {
-    public void Configure()
+    public static void Configure()
     {
+        BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(GuidRepresentation.Standard));
         BsonClassMap.RegisterClassMap<ShoppingCart>(classMap =>
         {
             classMap.AutoMap();
             classMap.MapIdMember(c => c.UserId);
         });
     }
-
 }
