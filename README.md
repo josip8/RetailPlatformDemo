@@ -10,5 +10,12 @@ docker compose up
 
 // 3. open http://localhost:5000/swagger in browser
 ```
----
+
 Alternatevely, install `Redis` and `MongoDB` locally, modify connection strings and run `AbyDemo.Cart.API` project - .NET 10 required
+
+---
+
+TO-DO
+- add tests (unit, e2e)
+- add Kafka
+- add shared logging library

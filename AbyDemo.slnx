@@ -1,6 +1,11 @@
 <Solution>
-  <Project Path="AbyDemo.Cart/AbyDemo.Cart.API/AbyDemo.Cart.API.csproj" />
-  <Project Path="AbyDemo.Cart/AbyDemo.Cart.Application/AbyDemo.Cart.Application.csproj" Id="18db2ec2-46ea-4bf2-8f33-a0a049d60025" />
-  <Project Path="AbyDemo.Cart/AbyDemo.Cart.Domain/AbyDemo.Cart.Domain.csproj" />
-  <Project Path="AbyDemo.Cart/AbyDemo.Cart.Infrastructure/AbyDemo.Cart.Infrastructure.csproj" Id="55c0a7f2-fdb0-4bbf-904b-57f90a546c61" />
+  <Folder Name="/AbyDemo.Cart/">
+    <Project Path="AbyDemo.Cart/AbyDemo.Cart.API/AbyDemo.Cart.API.csproj" />
+    <Project Path="AbyDemo.Cart/AbyDemo.Cart.Application/AbyDemo.Cart.Application.csproj" Id="18db2ec2-46ea-4bf2-8f33-a0a049d60025" />
+    <Project Path="AbyDemo.Cart/AbyDemo.Cart.Domain/AbyDemo.Cart.Domain.csproj" />
+    <Project Path="AbyDemo.Cart/AbyDemo.Cart.Infrastructure/AbyDemo.Cart.Infrastructure.csproj" Id="55c0a7f2-fdb0-4bbf-904b-57f90a546c61" />
+  </Folder>
+  <Folder Name="/AbyDemo.Order/">
+    <Project Path="AbyDemo.Order/AbyDemo.Order.API/AbyDemo.Order.API.csproj" Id="2dd78f74-f057-4420-a08f-e00ca7da7588" />
+  </Folder>
 </Solution>
