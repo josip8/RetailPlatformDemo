@@ -1,5 +1,6 @@
 using AbyDemo.Cart.Application.Products;
 using AbyDemo.Cart.Domain.Contracts.Cache;
+using AbyDemo.Cart.Domain.Contracts.Events;
 using AbyDemo.Cart.Domain.Contracts.Repositories;
 using AbyDemo.Cart.Infrastructure.Cache;
 using AbyDemo.Cart.Infrastructure.Data;
@@ -47,6 +48,12 @@ public static class DependencyInjection
             client.BaseAddress = new Uri("https://fake-url.com/");
         });
 
+        return services;
+    }
+
+    public static IServiceCollection AddEventPublisher(this IServiceCollection services)
+    {
+        services.AddSingleton<IEventPublisher, KafkaEventPublisher>();
         return services;
     }
 }

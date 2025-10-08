@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRedisCache(builder.Configuration);
 builder.Services.AddMongoDatabase(builder.Configuration);
 builder.Services.AddProductService();
+builder.Services.AddEventPublisher();
 builder.Services.AddApplicationServices();
 builder.Services.AddControllers(options => options.Filters.Add<ExceptionFilter>());
 builder.Services.AddEndpointsApiExplorer();
